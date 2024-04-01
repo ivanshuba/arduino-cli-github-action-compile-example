@@ -8,7 +8,7 @@ updates:
   - package-ecosystem: github-actions
     directory: / # Check the repository's workflows under /.github/workflows/
     assignees:
-      - per1234
+      - ivanshuba
     schedule:
       interval: daily
     labels:
@@ -18,7 +18,7 @@ updates:
     target-branch: compile-sketches-demo
     directory: /
     assignees:
-      - per1234
+      - ivanshuba
     schedule:
       interval: daily
     labels:
