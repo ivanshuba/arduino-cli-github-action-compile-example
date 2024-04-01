@@ -22,7 +22,7 @@
   http://www.arduino.cc/en/Tutorial/Blink
 */
 
-#define VERSION = 1.0
+#define VERSION 1.0
 
 unsigned long counter = 0;
 
