@@ -42,6 +42,6 @@ jobs:
       - name: Publish release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "blink.ino.hex"
+          artifacts: "./blink/build/arduino.avr.uno/blink.ino.hex"
           tag: "release"
           token: ${{ secrets.GITHUB_TOKEN }}  
