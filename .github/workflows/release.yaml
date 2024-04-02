@@ -6,8 +6,8 @@ jobs:
 
   build:
     
-    runs-on: ubuntu:latest
-    
+    runs-on: windows-latest
+        
     steps:
       # First of all, we clone the repo using the `checkout` action.
       - name: Checkout  
