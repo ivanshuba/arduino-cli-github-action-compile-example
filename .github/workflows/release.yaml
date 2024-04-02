@@ -6,7 +6,7 @@ jobs:
 
   build:
     
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
         
     steps:
       # First of all, we clone the repo using the `checkout` action.
@@ -18,12 +18,6 @@ jobs:
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@v1
 
-      #
-      - name: Print working and repository directories
-        run:
-          pwd
-          ls
-        
       # Install platform
       - name: Install platform
         run: |
@@ -32,18 +26,22 @@ jobs:
       # Compile sketch using the fully qualified board name ( FQBN )
       - name: Compile sketch
         run: arduino-cli -v compile --fqbn arduino:avr:uno ./blink -e
+       
+      # Show directory/file tree
+      - name: Show file tree
+        run: tree /f
         
       # Upload artifact
       - name: Upload artifact   
         uses: actions/upload-artifact@v1
         with:
           name: blink.ino.hex
-          path: releases/blink.ino.hex 
+          path: ./blink/blink.ino.hex 
           
       # Publish release    
       - name: Publish release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "releases/blink.ino.hex"
+          artifacts: "blink.ino.hex"
           tag: "release"
           token: ${{ secrets.GITHUB_TOKEN }}  
