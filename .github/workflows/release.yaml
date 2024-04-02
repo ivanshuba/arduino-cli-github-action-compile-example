@@ -18,6 +18,12 @@ jobs:
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@v1
 
+      #
+      - name: Print working and repository directories
+        run:
+          pwd
+          ls
+        
       # Install platform
       - name: Install platform
         run: |
