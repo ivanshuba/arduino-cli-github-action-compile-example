@@ -1,0 +1,26 @@
+
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v1
+    - name: install arduino cli
+      run:  curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+    - name: create dir
+      run: mkdir -p /home/runner/.arduino15/packages
+    - name: lib init
+      run: sudo ./bin/arduino-cli core update-index
+    - name: install esp8266
+      run: sudo ./bin/arduino-cli core install arduino:avr
+    - name: compile
+      run: sudo ./bin/arduino-cli compile --fqbn -e arduino:avr:uno ./blink
+    - uses: actions/upload-artifact@v1
+      with:
+        name: blink.ino.hex
+        path: releases/blink.ino.hex 
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: "releases/blink.ino.hex"
+        tag: "release"
+        token: ${{ secrets.GITHUB_TOKEN }}  
