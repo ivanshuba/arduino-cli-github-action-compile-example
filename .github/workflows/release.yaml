@@ -25,7 +25,7 @@ jobs:
           arduino-cli core install arduino:avr
       # Compile sketch using the fully qualified board name ( FQBN )
       - name: Compile sketch
-        run: arduino-cli compile --fqbn arduino:avr:uno ./blink -e
+        run: arduino-cli -v compile --fqbn arduino:avr:uno ./blink -e
         
       # Upload artifact
       - name: Upload artifact   
