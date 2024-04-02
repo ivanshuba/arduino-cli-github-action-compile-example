@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: blink.ino.hex
-          path: ./blink/blink.ino.hex 
+          path: ./blink/build/arduino.avr.uno/blink.ino.hex 
           
       # Publish release    
       - name: Publish release
