@@ -1,26 +1,43 @@
+name: release
 
 on: [push]
+
 jobs:
+
   build:
+    
     runs-on: ubuntu-18.04
+    
     steps:
-    - uses: actions/checkout@v1
-    - name: install arduino cli
-      run:  curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-    - name: create dir
-      run: mkdir -p /home/runner/.arduino15/packages
-    - name: lib init
-      run: sudo ./bin/arduino-cli core update-index
-    - name: install esp8266
-      run: sudo ./bin/arduino-cli core install arduino:avr
-    - name: compile
-      run: sudo ./bin/arduino-cli compile --fqbn -e arduino:avr:uno ./blink
-    - uses: actions/upload-artifact@v1
-      with:
-        name: blink.ino.hex
-        path: releases/blink.ino.hex 
-    - uses: ncipollo/release-action@v1
-      with:
-        artifacts: "releases/blink.ino.hex"
-        tag: "release"
-        token: ${{ secrets.GITHUB_TOKEN }}  
+      # First of all, we clone the repo using the `checkout` action.
+      - name: Checkout  
+        uses: actions/checkout@v4
+
+      # Use the `arduino/setup-arduino-cli` action to install 
+      # and configure the Arduino CLI on the system.
+      - name: Setup Arduino CLI
+        uses: arduino/setup-arduino-cli@v1
+
+      # Install platform
+      - name: Install platform
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install arduino:avr
+      # Compile sketch using the fully qualified board name ( FQBN )
+      - name: Compile sketch
+        run: arduino-cli compile --fqbn -e arduino:avr:uno ./blink
+        
+      # Upload artifact
+      - name: Upload artifact   
+        uses: actions/upload-artifact@v1
+        with:
+          name: blink.ino.hex
+          path: releases/blink.ino.hex 
+          
+      # Publish release    
+      - name: Publish release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "releases/blink.ino.hex"
+          tag: "release"
+          token: ${{ secrets.GITHUB_TOKEN }}  
